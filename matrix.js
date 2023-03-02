@@ -32,19 +32,10 @@ export function getAllNeighbors(coordinates) {
   const n7 = matrix[y]?.[x - 1];
   const n8 = matrix[y - 1]?.[x - 1];
 
-  const n9 = matrix[x]?.[y + 1];
-  const n10 = matrix[x + y]?.[y - x];
-  const n11 = matrix[x + x]?.[y];
-  const n12 = matrix[x + x]?.[y + x];
-  const n13 = matrix[x ]?.[y + x];
-  const n14 = matrix[x - x]?.[y + x];
-  const n15 = matrix[x - x]?.[y];
-  const n16 = matrix[x - x]?.[y - x];
-
-  return [
-    n1, n2, n3, n4, n5, n6, n7, n8, n9, n10, n11, n12, n13, n14, n15, n16].filter(item => {
+  const neighborArr = [n1, n2, n3, n4, n5, n6, n7, n8]
+  return neighborArr.filter(item => {
       return typeof(item) !== "undefined"
-    })
+  })
 }
 
 export function openAllBoxes() {

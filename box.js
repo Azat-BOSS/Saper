@@ -1,7 +1,6 @@
 import { getAllNeighbors, openAllBoxes } from "./matrix.js"
-
-
-const appElement = document.querySelector(".app")
+import { app, emoji } from "./variables.js"
+import { disabledAllButtons } from "./stopGame.js"
 
 class Box {
   constructor(isBomb, coordinates) {
@@ -47,47 +46,64 @@ class Box {
     this.boxElem.innerHTML = isFlagged ? "🚩" : "";
   }
 
+  setQuestion(isQuestion) {
+    this.isQuestion = isQuestion
+    this.boxElem.innerHTML = this.isQuestion ? "❓": ""
+  }
+
+  gameOver(isOver) {
+    this.isOver = isOver
+    this.isOver ? emoji.textContent = "😵" : null
+  }
+
   onBoxClick(allowOpenNumber = false) {
-    if (this.isFlagged) {
-      this.setFlag(false);
-      return;
-    }
-
-    if(!this.value && !this.isOpenned) {
-      const allNeighbors = getAllNeighbors(this.coordinates)
-      this.open()
-
-      allNeighbors.forEach(neighbor => {
-        if(!neighbor.isOpenned) {
-          neighbor.onBoxClick(true)
-        }
-      })
-    } else if(this.value && allowOpenNumber || typeof this.value === "number"){ 
-      this.open()
-    }  else if(this.isBomb){
-      openAllBoxes()
-      setTimeout(() => {
-        alert("you loose") 
-        location.reload()
-      })
-    }
+      if(this.isFlagged) {
+        this.setFlag(false);
+        return;
+      }
+      if(this.isQuestion) {
+        this.setQuestion(false);
+        return;
+      }
+      if(!this.value && !this.isOpenned) {
+        const allNeighbors = getAllNeighbors(this.coordinates)
+        this.open()
+  
+        allNeighbors.forEach(neighbor => {
+          if(!neighbor.isOpenned) {
+            neighbor.onBoxClick(true)
+          }
+        })
+      } else if(this.value && allowOpenNumber || typeof this.value === "number"){ 
+        this.open()
+      } else if(this.isBomb){
+        openAllBoxes()
+        this.gameOver(true)
+        disabledAllButtons()
+      }
     this.showBoxValue()
   }
 
   createBoxOnArea() {
-    const boxElem = document.createElement("div")
+    const boxElem = document.createElement("button")
+    
+    this.boxElem = boxElem
     boxElem.classList.add("app__box_disabled", "app__box")
 
     if(this.value) {
       boxElem.classList.add(`app__box__${this.value}`)
     }
-    this.boxElem = boxElem
-    this.boxElem.addEventListener("click", () => this.onBoxClick())
     this.boxElem.addEventListener("contextmenu", (e) => {
       e.preventDefault();
-      this.setFlag(true);
+      this.setFlag(true)
     });
-    appElement.appendChild(boxElem)
+
+    this.boxElem.addEventListener("mousedown", () => {emoji.textContent = "😮"})
+    this.boxElem.addEventListener("click", () => {
+      emoji.textContent = "🙂"
+      this.onBoxClick()
+    })
+    app.appendChild(boxElem)
   }
 }
 
