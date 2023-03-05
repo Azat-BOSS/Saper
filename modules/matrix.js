@@ -1,9 +1,9 @@
-import { generateRandom } from "./random.js";
+import { generateRandom } from "../utils/random.js";
 import { createBox } from "./box.js";
 
 export let matrix = [];
 
-function createBomb(bombCount) {
+export function createBomb(bombCount) {
   let currentBombCount = bombCount
   
   const matrixHeight = matrix.length;
@@ -48,13 +48,12 @@ export function openAllBoxes() {
   });
 }
 
-export function createMatrix(width = 16, height = 16, bombCount = 20) {
+
+export function createMatrix(width, height, bombCount) {
   matrix = Array.from({ length: height }, () =>
     Array.from({ length: width }, () => 0)
-  );
-
-  createBomb(bombCount);
-
+  );  
+  createBomb(bombCount)
   matrix.forEach((matrixLine, y) => {
     matrixLine.forEach((matrixElem, x) => {
       const newBox = createBox(Boolean(matrixElem), {x, y})
@@ -62,3 +61,4 @@ export function createMatrix(width = 16, height = 16, bombCount = 20) {
     })
   })
 }
+

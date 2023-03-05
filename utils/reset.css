@@ -1,0 +1,29 @@
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a,
+ul,
+li,
+body,
+input,
+button {
+  margin: 0;
+  padding: 0;
+  font-family: 'Common Pixel', sans-serif;
+  outline: none;
+}
+
+button {
+  border: 1px solid rgb(186, 186, 186);
+  cursor: pointer;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}

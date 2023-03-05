@@ -1,7 +1,7 @@
 import { getAllNeighbors, openAllBoxes } from "./matrix.js"
-import { app, emoji } from "./variables.js"
+import { app, emoji, bombCount, flagCount } from "../utils/variables.js"
+import { decrementCntFlags, incrementCntFlags } from "./flags.js"
 import { disabledAllButtons } from "./stopGame.js"
-
 class Box {
   constructor(isBomb, coordinates) {
     this.isBomb = isBomb
@@ -38,6 +38,7 @@ class Box {
   open() {
     this.isOpenned = true;
     this.boxElem.classList.remove("app__box_disabled");
+    this.boxElem.setAttribute("disabled", true)
     this.showBoxValue();
   }
 
@@ -80,6 +81,7 @@ class Box {
         openAllBoxes()
         this.gameOver(true)
         disabledAllButtons()
+        flagCount.textContent = bombCount
       }
     this.showBoxValue()
   }
@@ -96,6 +98,15 @@ class Box {
     this.boxElem.addEventListener("contextmenu", (e) => {
       e.preventDefault();
       this.setFlag(true)
+      decrementCntFlags()
+      if(e.shiftKey) {
+        this.setQuestion(true)
+      }
+    });
+    this.boxElem.addEventListener("click", (e) => {
+      if(this.boxElem.textContent ===  "🚩") {
+        incrementCntFlags()
+      }
     });
 
     this.boxElem.addEventListener("mousedown", () => {emoji.textContent = "😮"})

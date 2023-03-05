@@ -1,0 +1,14 @@
+.header {
+  width: 595px;
+  background: #bcbcbc;
+  padding: 5px;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  column-gap: 100px;
+  background: #949494;
+  height: 100px;
+}

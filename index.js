@@ -1,10 +1,10 @@
-import { createMatrix } from "./matrix.js";
-import { generateTimer } from "./timer.js";
-import { emoji } from "./variables.js";
-import { reloadGame } from "./stopGame.js";
+import { createMatrix } from "./modules/matrix.js";
+import { generateTimer } from "./modules/timer.js";
+import { emoji, width, height, bombCount } from "./utils/variables.js";
+import { reloadGame } from "./modules/stopGame.js";
 
 function main() {
-  createMatrix()
+  createMatrix(width, height, bombCount)
   generateTimer()
   emoji.addEventListener("click", reloadGame)
 }

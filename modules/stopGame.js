@@ -1,4 +1,4 @@
-import { emoji } from "./variables.js"
+import { emoji } from "../utils/variables.js"
 
 export function disabledAllButtons() {
   const buttons = document.querySelectorAll(".app__box")
@@ -10,8 +10,5 @@ export function disabledAllButtons() {
 }
 
 export function reloadGame() {
-  console.log("hello")
-  if(emoji.textContent === "😵") {
-    location.reload()
-  }
+  location.reload()
 }
